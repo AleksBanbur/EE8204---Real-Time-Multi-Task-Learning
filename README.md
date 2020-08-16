@@ -19,22 +19,14 @@ Data Sets Used to Train the weights
 A previous network was used with the NYUDv2 and KITTI outdoor data sets to pre-train the weights. These weights were then used in this implementation to show how the network can quickly perform semantic segmentation and depth estimation.
 
 Dependencies
-
---find-links https://download.pytorch.org/whl/torch_stable.html
-
-torch===1.6.0
-
-torchvision==0.7.0
-
-numpy
-
-opencv-python
-
-jupyter
-
-matplotlib
-
-Pillow
+* --find-links https://download.pytorch.org/whl/torch_stable.html
+* torch===1.6.0
+* torchvision==0.7.0
+* numpy
+* opencv-python
+* jupyter
+* matplotlib
+* Pillow
 
 Network Architecture
 
