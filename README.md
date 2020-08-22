@@ -51,7 +51,14 @@ The ResNet architecture employees residual learning which in short is a skip con
 
 ![Skip_Connection](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/Skip_Connection.PNG?raw=true)
 
-The encoder passes the output directly to the Light Weight RefineNet at the output of the encorder and through chained residual pooling blocks.
+The basics of ResNet are that after the image is input the first segment is 
+
+The encoder passes the output directly to the Light Weight RefineNet at the output of the encorder and through chained residual pooling blocks. The Light Weight RefineNet implementation is used as a decoder with an architecture as described in the following paper https://arxiv.org/pdf/1810.03272.pdf where modification are made to the original RefineNet to make it more desirable for real time semantic segmentation. A basic idea of the architecture is shown in the picture below:
+
+![Light Weight RefineNet]()
+
+
+
   
 
 ### Paper Implementation
