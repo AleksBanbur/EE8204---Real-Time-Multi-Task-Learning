@@ -36,10 +36,10 @@ The network architecture found in this paper can be broken down into four major 
 2. Light-Weight Refine Network
 3. Chained Residual Pooling blocks
 4. Task specific Convolution
-  - Segmentation
-  - Depth Estimation
+    - Segmentation
+    - Depth Estimation
   
-  The Encoder network 
+  The Encoder network is built from the ResNet architecture and supports ResNet [50, 101, 152]. The
 
 ### Paper Implementation
 
