@@ -43,7 +43,14 @@ A visual summary of the network architecture is provided below directly from the
 
 ![Network Architecture](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/Network_architecture.PNG?raw=true)
   
-  The Encoder network is built from the ResNet architecture and supports ResNet [50, 101, 152]. The
+The Encoder network is built from the ResNet architecture and supports ResNet [50, 101, 152]. The ResNet architecutre for the 34 layer network is shown below.
+ 
+![ResNet_34](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/ResNEt_34_Arch.png?raw=true)
+ 
+The ResNet architecture employees residual learning which in short is a skip connection that allows the input to a group of layers to skip and be added back to the output of that layer. This can be visualized as mathematically as 
+
+![Skip_Connection]()
+  
 
 ### Paper Implementation
 
