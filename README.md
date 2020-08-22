@@ -47,9 +47,11 @@ The Encoder network is built from the ResNet architecture and supports ResNet [5
  
 ![ResNet_34](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/ResNEt_34_Arch.png?raw=true)
  
-The ResNet architecture employees residual learning which in short is a skip connection that allows the input to a group of layers to skip and be added back to the output of that layer. This can be visualized as mathematically as 
+The ResNet architecture employees residual learning which in short is a skip connection that allows the input to a group of layers to skip and be added back to the output of that layer. This can be visualized as mathematically as F(x) + x where x is the input image and F(x) if the input image after convolution-batch normalization-activation have been perform (possibly also pooling for up/down sampling).
 
-![Skip_Connection]()
+![Skip_Connection](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/Skip_Connection.PNG?raw=true)
+
+The encoder passes the output directly to the Light Weight RefineNet at the output of the encorder and through chained residual pooling blocks.
   
 
 ### Paper Implementation
