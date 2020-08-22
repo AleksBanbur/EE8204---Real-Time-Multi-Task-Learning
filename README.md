@@ -54,17 +54,20 @@ The ResNet architecture employees residual learning which in short is a skip con
 The encoder network (ResNet) can be broken down into smaller chunks as seen in the ResNet 34 architecutre. The basics for a 34 layer ResNet are:
 
 1.Input Image
+    - 224 x 224 x 3 image (RGB)
+
 2. Convolution Layer 1 (grouping layer)
     - Input: Input image
-    - Conv: 7x7 kernel, 64 feature maps, stride 2
+    - Conv: 7x7 kernel, 64 feature maps, stride 2, padding = 3
     - Batch normalization
     - Max Pooling, stride 2
     - Output: Output_Conv_1
+        - size = 56 x 56 x 64 (row x column x feature maps)
     
 3. Convolution Layer 2 (grouping layer)
     - Input: Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1, padding = 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1, padding = 1
     - Output: Output_after_2_convolutions + Output_Conv_1
     - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
     - Conv: 3x3 kernel, 64 feature maps, stride 1
