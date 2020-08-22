@@ -56,85 +56,207 @@ The encoder network (ResNet) can be broken down into smaller chunks as seen in t
 1.Input Image
     - 224 x 224 x 3 image (RGB)
 
-2. Convolution Layer 1 (grouping layer)
+2. Convolution Layer 1 (grouping layer 1)
     - Input: Input image
+        - Input image = x
     - Conv: 7x7 kernel, 64 feature maps, stride 2, padding = 3
+        - size = 112 x 112 x 64 (row x column x feature maps)
     - Batch normalization
     - Max Pooling, stride 2
-    - Output: Output_Conv_1
         - size = 56 x 56 x 64 (row x column x feature maps)
+    - Output: Grouping1_Conv_1
+        - size = 56 x 56 x 64 (row x column x feature maps)
+        - let Grouping1_Conv1 = x_G1
     
-3. Convolution Layer 2 (grouping layer)
-    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
+3. Convolution Layer 2 (grouping layer 2)
+    - Input: Grouping1_Conv_1, skip connection to after 2 convolutional layers
+        - Input: x_1 = x_G1
     - Conv: 3x3 kernel, 64 feature maps, stride 1, padding = 1
+        - size = 56 x 56 x 64 (row x column x feature maps)
     - Conv: 3x3 kernel, 64 feature maps, stride 1, padding = 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+        - size = 56 x 56 x 64 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + Grouping1_Conv_1
+        - Let the output after two convolutions be F1(x) = x_G2_Conv1
+        - Output of skip connection is H1(x) = F1(x) + x_1
+        - H1(x) = x_G2_Conv1 + x_G1
+        - Let H1(x) = x_G2_SL1
+    - Input: Output of previous skip connection H1(x) = x_G2_SL1, skip connection to after 2 convolutional layers
+        - Input: x_2 = x_G2_SL1
     - Conv: 3x3 kernel, 64 feature maps, stride 1
+        - size = 56 x 56 x 64 (row x column x feature maps)
     - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+        - size = 56 x 56 x 64 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G2_SL1
+        - Let the output after two convolutions be F2(x) = x_G2_Conv2
+        - Output of skip connection is H2(x) = F2(x) + x_2
+        - H2(x) = x_G2_Conv2 + x_G2_SL1
+        - Let H2(x) = x_G2_SL2
+    - Input: Output of previous skip connection H2(x) = x_G2_SL2, skip connection to after 2 convolutional layers
+        - Input: x_3 = x_G2_SL2
     - Conv: 3x3 kernel, 64 feature maps, stride 1
+        - size = 56 x 56 x 64 (row x column x feature maps)
     - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
+        - size = 56 x 56 x 64 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G2_SL2
+        - Let the output after two convolutions be F3(x) = x_G2_Conv3
+        - Output of skip connection is H3(x) = F3(x) + x_3
+        - H3(x) = x_G2_Conv3 + x_G2_SL2
+        - Let H3(x) = x_G2_SL3
     
-4. Convolution Layer 3
-    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
+4. Convolution Layer 3 (Grouping Layer 3)
+    - Input: Output of previous skip connection H3(x) = x_G2_SL3, skip connection to after 2 convolutional layers
+        - Input: x_4 = x_G2_SL3
+    - Conv: 3x3 kernel, 128 feature maps, stride 2
+        - size = 28 x 28 x 128 (row x column x feature maps)
+    - Conv: 3x3 kernel, 128 feature maps, stride 1
+        - size = 28 x 28 x 128 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G2_SL3
+        - Let the output after two convolutions be F4(x) = x_G3_Conv1
+        - Output of skip connection is H4(x) = F4(x) + x_4
+        - H3(x) = x_G3_Conv1 + x_G2_SL3
+        - Let H4(x) = x_G3_SL1
+    - Input: Output of previous skip connection H4(x) = x_G3_SL1, skip connection to after 2 convolutional layers
+        - Input: x_5 = x_G3_SL1
+    - Conv: 3x3 kernel, 128 feature maps, stride 1
+        - size = 28 x 28 x 128 (row x column x feature maps)
+    - Conv: 3x3 kernel, 128 feature maps, stride 1
+        - size = 28 x 28 x 128 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G3_SL1
+        - Let the output after two convolutions be F5(x) = x_G3_Conv2
+        - Output of skip connection is H5(x) = F5(x) + x_5
+        - H5(x) = x_G3_Conv2 + x_G3_SL1
+        - Let H5(x) = x_G3_SL2
+    - Input: Output of previous skip connection H5(x) = x_G3_SL2, skip connection to after 2 convolutional layers
+        - Input: x_6 = x_G3_SL2
+    - Conv: 3x3 kernel, 128 feature maps, stride 1
+        - size = 28 x 28 x 128 (row x column x feature maps)
+    - Conv: 3x3 kernel, 128 feature maps, stride 1
+        - size = 28 x 28 x 128 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G3_SL2
+        - Let the output after two convolutions be F6(x) = x_G3_Conv3
+        - Output of skip connection is H6(x) = F6(x) + x_6
+        - H6(x) = x_G3_Conv3 + x_G3_SL2
+        - Let H6(x) = x_G3_SL3
+    - Input: Output of previous skip connection H6(x) = x_G3_SL3, skip connection to after 2 convolutional layers
+        - Input: x_7 = x_G3_SL3
+    - Conv: 3x3 kernel, 128 feature maps, stride 1
+        - size = 28 x 28 x 128 (row x column x feature maps)   
+    - Conv: 3x3 kernel, 128 feature maps, stride 1
+        - size = 28 x 28 x 128 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G3_SL3
+        - Let the output after two convolutions be F7(x) = x_G3_Conv4
+        - Output of skip connection is H6(x) = F7(x) + x_7
+        - H7(x) = x_G3_Conv4 + x_G3_SL3
+        - Let H7(x) = x_G3_SL4
     
-5. Convolution Layer 4
-    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
+5. Convolution Layer 4 (Grouping Layer 4)
+    - Input: Output of previous skip connection H7(x) = x_G3_SL4, skip connection to after 2 convolutional layers
+        - Input: x_8 = x_G3_SL4
+    - Conv: 3x3 kernel, 256 feature maps, stride 2
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G3_SL4
+        - Let the output after two convolutions be F8(x) = x_G4_Conv1
+        - Output of skip connection is H8(x) = F8(x) + x_8
+        - H8(x) = x_G4_Conv1 + x_G3_SL4
+        - Let H8(x) = x_G4_SL1
+    - Input: Output of previous skip connection H8(x) = x_G4_SL1, skip connection to after 2 convolutional layers
+        - Input: x_9 = x_G4_SL1
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G4_SL1
+        - Let the output after two convolutions be F9(x) = x_G4_Conv2
+        - Output of skip connection is H9(x) = F9(x) + x_9
+        - H9(x) = x_G4_Conv2 + x_G4_SL1
+        - Let H9(x) = x_G4_SL2
+    - Input: Output of previous skip connection H9(x) = x_G4_SL2, skip connection to after 2 convolutional layers
+        - Input: x_10 = x_G4_SL2
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G4_SL2
+        - Let the output after two convolutions be F10(x) = x_G4_Conv3
+        - Output of skip connection is H10(x) = F10(x) + x_10
+        - H10(x) = x_G4_Conv3 + x_G4_SL2
+        - Let H10(x) = x_G4_SL3
+    - Input: Output of previous skip connection H10(x) = x_G4_SL3, skip connection to after 2 convolutional layers
+        - Input: x_11 = x_G4_SL3
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G4_SL3
+        - Let the output after two convolutions be F11(x) = x_G4_Conv4
+        - Output of skip connection is H11(x) = F11(x) + x_11
+        - H11(x) = x_G4_Conv4 + x_G4_SL3
+        - Let H11(x) = x_G4_SL4
+    - Input: Output of previous skip connection H11(x) = x_G4_SL4, skip connection to after 2 convolutional layers
+        - Input: x_12 = x_G4_SL4
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G4_SL4
+        - Let the output after two convolutions be F12(x) = x_G4_Conv5
+        - Output of skip connection is H12(x) = F12(x) + x_12
+        - H12(x) = x_G4_Conv5 + x_G4_SL4
+        - Let H12(x) = x_G4_SL5
+    - Input: Output of previous skip connection H12(x) = x_G4_SL5, skip connection to after 2 convolutional layers
+        - Input: x_13 = x_G4_SL5
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Conv: 3x3 kernel, 256 feature maps, stride 1
+        - size = 14 x 14 x 256 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G4_SL5
+        - Let the output after two convolutions be F13(x) = x_G4_Conv6
+        - Output of skip connection is H13(x) = F13(x) + x_13
+        - H13(x) = x_G4_Conv6 + x_G4_SL5
+        - Let H13(x) = x_G4_SL6
     
-6. Convolution Layer 5
-    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
-    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Conv: 3x3 kernel, 64 feature maps, stride 1
-    - Output: Output_after_2_convolutions + Output_Conv_1
+        
+        
+        
+        
+
+    
+6. Convolution Layer 5 (Grouping Layer 5)
+    - Input: Output of previous skip connection H13(x) = x_G4_SL6, skip connection to after 2 convolutional layers
+        - Input: x_14 = x_G4_SL6
+    - Conv: 3x3 kernel, 512 feature maps, stride 2
+        - size = 7 x 7 x 512 (row x column x feature maps)
+    - Conv: 3x3 kernel, 512 feature maps, stride 1
+        - size = 7 x 7 x 512 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G4_SL6
+        - Let the output after two convolutions be F14(x) = x_G5_Conv1
+        - Output of skip connection is H14(x) = F14(x) + x_14
+        - H14(x) = x_G5_Conv1 + x_G4_SL6
+        - Let H14(x) = x_G5_SL1
+    - Input: Output of previous skip connection H14(x) = x_G5_SL1, skip connection to after 2 convolutional layers
+        - Input: x_15 = x_G5_SL1
+    - Conv: 3x3 kernel, 512 feature maps, stride 1
+        - size = 7 x 7 x 512 (row x column x feature maps)
+    - Conv: 3x3 kernel, 512 feature maps, stride 1
+        - size = 7 x 7 x 512 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G5_SL1
+        - Let the output after two convolutions be F15(x) = x_G5_Conv2
+        - Output of skip connection is H15(x) = F15(x) + x_15
+        - H15(x) = x_G5_Conv2 + x_G5_SL1
+        - Let H15(x) = x_G5_SL2
+    - Input: Output of previous skip connection H15(x) = x_G5_SL2, skip connection to after 2 convolutional layers
+        - Input: x_16 = x_G5_SL2
+    - Conv: 3x3 kernel, 512 feature maps, stride 1
+        - size = 7 x 7 x 512 (row x column x feature maps)
+    - Conv: 3x3 kernel, 512 feature maps, stride 1
+        - size = 7 x 7 x 512 (row x column x feature maps)
+    - Output: Output_after_2_convolutions + x_G5_SL2
+        - Let the output after two convolutions be F16(x) = x_G5_Conv3
+        - Output of skip connection is H16(x) = F16(x) + x_16
+        - H16(x) = x_G5_Conv3 + x_G5_SL3
+        - Let H16(x) = x_G5_SL3
     
 7. Average Pooling
 
