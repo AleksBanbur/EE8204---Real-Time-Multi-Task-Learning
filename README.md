@@ -217,12 +217,6 @@ The encoder network (ResNet) can be broken down into smaller chunks as seen in t
         - H13(x) = x_G4_Conv6 + x_G4_SL5
         - Let H13(x) = x_G4_SL6
     
-        
-        
-        
-        
-
-    
 6. Convolution Layer 5 (Grouping Layer 5)
     - Input: Output of previous skip connection H13(x) = x_G4_SL6, skip connection to after 2 convolutional layers
         - Input: x_14 = x_G4_SL6
@@ -258,10 +252,12 @@ The encoder network (ResNet) can be broken down into smaller chunks as seen in t
         - H16(x) = x_G5_Conv3 + x_G5_SL3
         - Let H16(x) = x_G5_SL3
     
-7. Average Pooling
+7. Average Pooling (Global Average Pooling)
+    - Global Average Pooling is applied to the output of the last convolutional grouping in the ResNet 34. This global average pooling takes the 7 x 7 x 512 tensor of feature maps and averages the 7 x 7 feature map into a 1 x 1 feature map of depth 512. The output of this layer is a feature map of 1 x 1 x 512.
 
 8. Full Connected Layer
-
+    - The Global Average Pooling is the connected to each output neuron. Each feature map in the 1 x 1 x 512 is connected to the output neurons making this a fully connected layer.
+    
 The encoder passes the output directly to the Light Weight RefineNet at the output of the encorder and through chained residual pooling blocks. The Light Weight RefineNet implementation is used as a decoder with an architecture as described in the following paper https://arxiv.org/pdf/1810.03272.pdf where modification are made to the original RefineNet to make it more desirable for real time semantic segmentation. A basic idea of the architecture is shown in the picture below:
 
 ![Light Weight RefineNet]()
