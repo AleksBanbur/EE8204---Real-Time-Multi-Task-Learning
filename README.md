@@ -51,14 +51,94 @@ The ResNet architecture employees residual learning which in short is a skip con
 
 ![Skip_Connection](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/Skip_Connection.PNG?raw=true)
 
-The basics of ResNet are that after the image is input the first segment is 
+The encoder network (ResNet) can be broken down into smaller chunks as seen in the ResNet 34 architecutre. The basics for a 34 layer ResNet are:
+
+1.Input Image
+2. Convolution Layer 1 (grouping layer)
+    - Input: Input image
+    - Conv: 7x7 kernel, 64 feature maps, stride 2
+    - Batch normalization
+    - Max Pooling, stride 2
+    - Output: Output_Conv_1
+3. Convolution Layer 2 (grouping layer)
+    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+4. Convolution Layer 3
+    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+5. Convolution Layer 4
+    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+6. Convolution Layer 5
+    - Input: Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+    - Input: Output_after_2_convolutions + Output_Conv_1, skip connection to after 2 convolutional layers
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Conv: 3x3 kernel, 64 feature maps, stride 1
+    - Output: Output_after_2_convolutions + Output_Conv_1
+7. Average Pooling
+8. Full Connected Layer
 
 The encoder passes the output directly to the Light Weight RefineNet at the output of the encorder and through chained residual pooling blocks. The Light Weight RefineNet implementation is used as a decoder with an architecture as described in the following paper https://arxiv.org/pdf/1810.03272.pdf where modification are made to the original RefineNet to make it more desirable for real time semantic segmentation. A basic idea of the architecture is shown in the picture below:
 
 ![Light Weight RefineNet]()
 
 
+Insert description about light weight refinenet
 
+Finally, the paper makes use of two task branches at the output of the Light Weight Refine Network. Each branch has the same architecture with a 1x1 depth convolution and a 3x3 convolution. Using Multitask learning each branch is able to perform a signle task such as semantic segmentation and depth estimation.
   
 
 ### Paper Implementation
