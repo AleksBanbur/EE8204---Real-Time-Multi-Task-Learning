@@ -39,7 +39,7 @@ The network architecture found in this paper can be broken down into four major 
     - Segmentation
     - Depth Estimation
   A visual summary of the network architecture is provided below directly from the paper.
-  ![alt text](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/tree/master/Images/Network Architecture.png)
+  ![Network Architecture](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/tree/master/Images/NetworkArchitecture.png)
   
   The Encoder network is built from the ResNet architecture and supports ResNet [50, 101, 152]. The
 
