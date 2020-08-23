@@ -270,7 +270,6 @@ The main changes found in this paper to the architecutre of the Light Weight Ref
 
 Finally, the paper makes use of two task branches at the output of the Light Weight Refine Network. Each branch has the same architecture with a 1x1 depth convolution and a 3x3 convolution. Using Multitask learning each branch is able to perform a signle task such as semantic segmentation and depth estimation.
   
-
 ### Paper Implementation
 
 How to run the code
@@ -288,6 +287,11 @@ Extract this repositor to within the folder you created but do not place the ven
 my_Project\venv\Scripts\activate.bat
 pip install -r requirements.txt
 ```
+
+Once all the dependencies are installed you will be able to add aditional images to the examples folder and then upadate the folder path within the evaluation python file by changing the img_Path variable to have the associated path to your new image.
+
+This implementation makes use of check point files and pretrained weights for the network. The pretrained weights are determined by using the Light Weight Refine Net with a ResNet encoder to determine the optimal weights for semantic segmentation. Then the new network built specifically for this paper makes use of those weights and multi task learning to accurately guess the missing label data for either semantic mapping or depth estimation.
+
 ### Conclusions
 
 TBA
