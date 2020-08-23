@@ -294,8 +294,9 @@ This implementation makes use of check point files and pretrained weights for th
 
 ### Conclusions
 
-TBA
+This paper provides a deep dive for the reader if they want to become familiar with encoder decoder networks, ResNet, RefineNet and Leight Weight Refine Net. Using pretrained wieghts significantly speeds up the time to process an input image into is respective semantic and depth mapping. A full pipeline implementation from ResNet to Light Weight Refine net is the next goal of work to test the real-time capabilities of this method from start to finish.
 
+The ease with which the network performs multi-task learning using the pre-train weights is a great indicator of possible future work. Aside from the full pipe line implementation it would be interesting to try and change the network architecture to use different encoder and decoders to see if this method can stil be improved.
 
 
 
