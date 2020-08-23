@@ -257,13 +257,16 @@ The encoder network (ResNet) can be broken down into smaller chunks as seen in t
 
 8. Full Connected Layer
     - The Global Average Pooling is the connected to each output neuron. Each feature map in the 1 x 1 x 512 is connected to the output neurons making this a fully connected layer.
-    
+
+The ResNet 34 architecutre shown above can be extended to 50/101/152 layers. This example is just to illustrate the encoder architecutre used in the paper. The different ResNet architecutres can all be used to determine which architecture gives the best results. For each ResNet architecture the decoder architecture which uses the Light Weight RefineNet will need to be updated.
+
 The encoder passes the output directly to the Light Weight RefineNet at the output of the encorder and through chained residual pooling blocks. The Light Weight RefineNet implementation is used as a decoder with an architecture as described in the following paper https://arxiv.org/pdf/1810.03272.pdf where modification are made to the original RefineNet to make it more desirable for real time semantic segmentation. A basic idea of the architecture is shown in the picture below:
 
-![Light Weight RefineNet]()
+![Light Weight RefineNet](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/LWRN_General.PNG?raw=true)
 
+The main changes found in this paper to the architecutre of the Light Weight Refine Network is the changing of the Residual Convolution Units (RCU) that connect the output of each encoder feature map to the decoder are now Chained Residual Pooling (CRP) blocks. This means that at the input of each decoder layered grouping the corresponding feature map from the encoder will pass throught the CRP blocks before beginning the process of following the Light Weight Refine Network architecutre of passing through a light weight fusion block, leight weight CRP block, and a leight weight RCU block before all being added together to create an output image the same size as the input image.
 
-Insert description about light weight refinenet
+![Light Weight RefineNet](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/LWRN_General.PNG?raw=true)
 
 Finally, the paper makes use of two task branches at the output of the Light Weight Refine Network. Each branch has the same architecture with a 1x1 depth convolution and a 3x3 convolution. Using Multitask learning each branch is able to perform a signle task such as semantic segmentation and depth estimation.
   
