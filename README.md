@@ -266,7 +266,7 @@ The encoder passes the output directly to the Light Weight RefineNet at the outp
 
 The main changes found in this paper to the architecutre of the Light Weight Refine Network is the changing of the Residual Convolution Units (RCU) that connect the output of each encoder feature map to the decoder are now Chained Residual Pooling (CRP) blocks. This means that at the input of each decoder layered grouping the corresponding feature map from the encoder will pass throught the CRP blocks before beginning the process of following the Light Weight Refine Network architecutre of passing through a light weight fusion block, leight weight CRP block, and a leight weight RCU block before all being added together to create an output image the same size as the input image.
 
-![Light Weight RefineNet](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/LWRN_General.PNG?raw=true)
+![Light Weight RefineNet](https://github.com/AleksBanbur/EE8204---Real-Time-Multi-Task-Learning/blob/master/Images/LW_CRP_RCU_FUSION_Blocks.PNG?raw=true)
 
 Finally, the paper makes use of two task branches at the output of the Light Weight Refine Network. Each branch has the same architecture with a 1x1 depth convolution and a 3x3 convolution. Using Multitask learning each branch is able to perform a signle task such as semantic segmentation and depth estimation.
   
